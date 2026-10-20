@@ -37,8 +37,12 @@ ALLOWED_HOSTS = [
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://skilledWebinars.com",
-    "https://www.skilledWebinars.com",
+    origin.strip()
+    for origin in os.getenv(
+        "CSRF_TRUSTED_ORIGINS",
+        "https://skilledwebinarspro.com,https://www.skilledwebinarspro.com",
+    ).split(",")
+    if origin.strip()
 ]
 
 
@@ -328,12 +332,12 @@ else:
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_SAMESITE = "Lax"
-    SESSION_COOKIE_DOMAIN = ".skilledWebinars.com"
+    SESSION_COOKIE_DOMAIN = ".skilledwebinarspro.com"
 
     CSRF_COOKIE_SECURE = True
     CSRF_COOKIE_HTTPONLY = False
     CSRF_COOKIE_SAMESITE = "Lax"
-    CSRF_COOKIE_DOMAIN = ".skilledWebinars.com"
+    CSRF_COOKIE_DOMAIN = ".skilledwebinarspro.com"
 
     # HTTPS is enforced by Nginx/Cloudflare.
     # Keep Django redirect disabled to avoid proxy redirect loops.
